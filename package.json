@@ -4,6 +4,9 @@
   "description": "A full stack home assignment.",
   "main": "index.js",
   "scripts": {
+    "i-server": "cd ./server && npm ci",
+    "i-client": "cd ./client && npm ci",
+    "init-p": "npm run i-server && npm run i-client",
     "server": "cd ./server && npm run start",
     "client": "cd ./client && npm run start"
   },
