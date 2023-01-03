@@ -1,0 +1,36 @@
+.Button {
+  border: none;
+  font-size: 0.8em;
+  padding: 8px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: box-shadow 0.1s;
+  transition: filter 0.1s;
+  background-color: dodgerblue;
+  color: white;
+  &:hover {
+    filter: saturate(0.6);
+  }
+  &:active {
+    box-shadow: 0 0 4px white inset;
+  }
+  &:disabled {
+    background-color: darken($color: grey, $amount: 1);
+    color: darkgrey;
+  }
+  &.primaryColor {
+    background-color: dodgerblue;
+  }
+  &.secondaryColor {
+    background-color: mediumslateblue;
+  }
+  &.acceptColor {
+    background-color: #3ccf4e;
+  }
+  &.warningColor {
+    background-color: goldenrod;
+  }
+  &.declineColor {
+    background-color: crimson;
+  }
+}
