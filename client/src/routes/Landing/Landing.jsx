@@ -2,11 +2,12 @@ import Button from '@mui/material/Button';
 import { getServer } from '../../api/crud';
 import styles from './Landing.module.scss';
 import { useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Card from '../../components/Card/Card';
 import AddIcon from '@mui/icons-material/Add';
 
 function Landing({ codeBlocksArr }) {
+  const navigate = useNavigate();
   return (
     <section className={styles.Landing}>
       <h1 className={styles.title}>Choose code block:</h1>
@@ -25,13 +26,14 @@ function Landing({ codeBlocksArr }) {
           return (
             <Card
               dark
-              styling={{ width: 'min(10vh, 100px)', height: '100px', minWidth: 'fit-content' }}
+              styling={{ width: 'min(10vh, 100px)', minWidth: 'fit-content', cursor: 'pointer' }}
               className={styles.CodeBlockCard}
               key={codeBlockObj.name}
+              onClick={() => {
+                navigate(`/live-editor/code-block/${codeBlockObj.name}`);
+              }}
             >
-              <Link className="AppLink" to={`/live-editor/code-block/:${codeBlockObj.name}`}>
-                {codeBlockObj.name}
-              </Link>
+              <div className="AppLink">{codeBlockObj.name}</div>
             </Card>
           );
         })}

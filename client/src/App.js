@@ -12,8 +12,14 @@ function App() {
   const [codeBlocksArr, setCodeBlocksArr] = useState([]);
 
   useEffect(() => {
+    // TODO: Implement this to retrieve data from DB from the server
     console.log('Fetching');
-    setCodeBlocksArr([{ name: '11212212121221' }, { name: '2' }, { name: '3' }, { name: '4' }]);
+    setCodeBlocksArr([
+      { name: 'Async case' },
+      { name: 'Event loop' },
+      { name: 'Promise' },
+      { name: 'Generator function' },
+    ]);
   }, []);
 
   return (
