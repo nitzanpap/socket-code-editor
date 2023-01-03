@@ -39,5 +39,5 @@ io.on('connection', (socket) => {
 });
 
 server.listen(process.env.PORT, () => {
-  console.log('listening on *:3000');
+  console.log(`Server is listening on ${clc.yellow('http://localhost:' + process.env.PORT)}`);
 });

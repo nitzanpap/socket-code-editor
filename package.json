@@ -1,0 +1,21 @@
+{
+  "name": "socket-code-editor",
+  "version": "1.0.0",
+  "description": "A full stack home assignment.",
+  "main": "index.js",
+  "scripts": {
+    "server": "cd ./server && npm run start",
+    "client": "cd ./client && npm run start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nitzanpap/socket-code-editor.git"
+  },
+  "keywords": [],
+  "author": "Nitzan Papini",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nitzanpap/socket-code-editor/issues"
+  },
+  "homepage": "https://github.com/nitzanpap/socket-code-editor#readme"
+}
