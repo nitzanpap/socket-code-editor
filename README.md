@@ -40,11 +40,11 @@ Tom wants to share with Josh a piece of code, observe him while he is writing an
 
 Help Tom creating an online coding web application with the following pages and features :
 
-Lobby page (no need for authentication) :
+#### Lobby page (no need for authentication) :
 The page should contain the title “Choose code block” and a list of at least 4 items which represents code blocks, each item can be represented by a name (for example - “Async case”)
 Clicking on an item should take the user to the code block page with the details of the code block he chooses.
 
-Code block page :
+#### Code block page :
 Both users should enter this page. (2 different clients)
 Assume that the first user who opens the code block page is the mentor, after that, any other user will be counted as a student.
 
@@ -54,7 +54,7 @@ Code changes should be displayed in real-time (Socket)
 Use highlight.js to highlight the syntax (you can use any other library)
 (Support JS code only)
 
-General guidelines:
+#### General guidelines:
 
 Code blocks should be created manually, no need for API or UI.
 A code block should have the fields ‘title’ and ‘code’ (code is a string which represent JS code)
