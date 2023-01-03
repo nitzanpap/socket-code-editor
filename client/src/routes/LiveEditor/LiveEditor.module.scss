@@ -1,2 +1,13 @@
-.Page404 {
+.LiveEditor {
+  width: 80%;
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1vh;
+  .pre {
+    width: 100%;
+    border: 1px solid white;
+    text-align: start;
+  }
 }

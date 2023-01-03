@@ -7,6 +7,10 @@
   height: min(40vmin, 100px);
   @media only screen and (max-width: 400px) {
     flex-flow: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    border-bottom: 2px #bfbfbf solid;
   }
 
   .LeftSideOfNav {
