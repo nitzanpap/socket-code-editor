@@ -4,21 +4,9 @@ import Highlight, { defaultProps } from 'prism-react-renderer';
 import theme from 'prism-react-renderer/themes/nightOwl';
 import styles from './MyEditor.module.scss';
 
-const exampleCode = `
-const baseValue = prompt('Enter the base of a triangle: ');
-const heightValue = prompt('Enter the height of a triangle: ');
-
-// calculate the area
-const areaValue = (baseValue * heightValue) / 2;
-
-console.log(
-  \`The area of the triangle is \${areaValue}\`
-);
-`.trim();
-
-function MyEditor() {
+function MyEditor({ code, language, onChange }) {
   return (
-    <Highlight {...defaultProps} theme={theme} code={exampleCode} language="javascript">
+    <Highlight {...defaultProps} theme={theme} code={code} language={language}>
       {({ tokens, getLineProps, getTokenProps }) => (
         <div className={styles.MyEditor}>
           <pre className={styles.Pre} id="editable" contentEditable>
@@ -29,6 +17,7 @@ function MyEditor() {
                   {line.map((token, key) => (
                     <span key={key} {...getTokenProps({ token, key })} />
                   ))}
+                  {console.log(line, i)}
                 </span>
               </div>
             ))}
