@@ -1,32 +1,27 @@
-import Editor from 'react-simple-code-editor';
-import { useState } from 'react';
+// import Editor from 'react-simple-code-editor';
+// import { useState } from 'react';
 import Highlight, { defaultProps } from 'prism-react-renderer';
 import theme from 'prism-react-renderer/themes/nightOwl';
 import styles from './MyEditor.module.scss';
 
 const exampleCode = `
-import React, { useState } from "react";
+const baseValue = prompt('Enter the base of a triangle: ');
+const heightValue = prompt('Enter the height of a triangle: ');
 
-function Example() {
-  const [count, setCount] = useState(0);
+// calculate the area
+const areaValue = (baseValue * heightValue) / 2;
 
-  return (
-    <div>
-      <p>You clicked {count} times</p>
-      <button onClick={() => setCount(count + 1)}>
-        Click me
-      </button>
-    </div>
-  );
-}
+console.log(
+  \`The area of the triangle is \${areaValue}\`
+);
 `.trim();
 
 function MyEditor() {
   return (
-    <Highlight {...defaultProps} theme={theme} code={exampleCode} language="jsx">
+    <Highlight {...defaultProps} theme={theme} code={exampleCode} language="javascript">
       {({ tokens, getLineProps, getTokenProps }) => (
         <div className={styles.MyEditor}>
-          <pre className={styles.Pre}>
+          <pre className={styles.Pre} id="editable" contentEditable>
             {tokens.map((line, i) => (
               <div className={styles.Line} key={i} {...getLineProps({ line, key: i })}>
                 <span className={styles.LineNo}>{i + 1}</span>
