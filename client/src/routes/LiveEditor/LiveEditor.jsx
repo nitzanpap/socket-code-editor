@@ -1,7 +1,6 @@
 import { useParams } from 'react-router-dom';
 import styles from './LiveEditor.module.scss';
-import Editor from '../../components/Editor/Editor';
-
+import MyEditor from '../../components/MyEditor/MyEditor';
 
 function LiveEditor() {
   const { name } = useParams();
@@ -9,7 +8,7 @@ function LiveEditor() {
     <section className={styles.LiveEditor}>
       <h1>Live Editor</h1>
       <h4>{name}</h4>
-      <Editor />
+      <MyEditor />
     </section>
   );
 }
