@@ -2,7 +2,7 @@ import Button from '@mui/material/Button';
 import { getServer } from '../../api/crud';
 import styles from './Landing.module.scss';
 import { useCallback } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Card from '../../components/Card/Card';
 import AddIcon from '@mui/icons-material/Add';
 
