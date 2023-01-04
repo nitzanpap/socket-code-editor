@@ -5,23 +5,20 @@ import theme from 'prism-react-renderer/themes/nightOwl';
 import styles from './MyEditor.module.scss';
 
 const exampleCode = `
-(function someDemo() {
-  var test = "Hello World!";
-  console.log(test);
-})();
+const baseValue = prompt('Enter the base of a triangle: ');
+const heightValue = prompt('Enter the height of a triangle: ');
 
-return () => <App />;
-`;
+// calculate the area
+const areaValue = (baseValue * heightValue) / 2;
 
-const styles1 = {
-  root: {
-    boxSizing: 'border-box',
-    fontFamily: '"Dank Mono", "Fira Code", monospace',
-    ...theme.plain,
-  },
-};
+console.log(
+  \`The area of the triangle is \${areaValue}\`
+);
+console.log("Hello");
+console.log("Hello");
+`.trim();
 
-const MyEditor = ({ language }) => {
+const MyEditor = ({ language, minHeight, padding }) => {
   const [code, setCode] = useState(exampleCode);
 
   const onValueChange = (newCode) => {
@@ -31,7 +28,7 @@ const MyEditor = ({ language }) => {
   const highlight = (code) => (
     <Highlight {...defaultProps} theme={theme} code={code} language={language}>
       {({ tokens, getLineProps, getTokenProps }) => (
-        <Fragment>
+        <div style={{ minHeight: minHeight }}>
           {tokens.map((line, i) => (
             <div {...getLineProps({ line, key: i })}>
               {line.map((token, key) => (
@@ -39,7 +36,7 @@ const MyEditor = ({ language }) => {
               ))}
             </div>
           ))}
-        </Fragment>
+        </div>
       )}
     </Highlight>
   );
@@ -48,9 +45,9 @@ const MyEditor = ({ language }) => {
     <Editor
       value={code}
       onValueChange={useCallback(onValueChange, [])}
-      highlight={useCallback(highlight, [language])}
-      padding={10}
-      style={styles1.root}
+      highlight={useCallback(highlight, [language, minHeight])}
+      padding={padding}
+      style={{ ...theme.plain }}
       className={styles.MyEditor}
     />
   );

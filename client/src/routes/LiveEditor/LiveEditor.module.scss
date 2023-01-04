@@ -5,9 +5,10 @@
   justify-content: flex-start;
   align-items: center;
   gap: 1vh;
-  .pre {
+  .EditorContainer {
     width: 100%;
     border: 1px solid white;
-    text-align: start;
+    border-radius: 4px;
+    overflow: auto;
   }
 }

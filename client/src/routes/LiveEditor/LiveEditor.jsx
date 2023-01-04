@@ -18,6 +18,8 @@ console.log(
 function LiveEditor() {
   const { name } = useParams();
   const [code, setCode] = useState(exampleCode);
+  const minHeight = 50;
+  const padding = 10;
 
   const onCodeChange = (newCode) => {
     setCode(newCode);
@@ -27,7 +29,15 @@ function LiveEditor() {
     <section className={styles.LiveEditor}>
       <h1>Live Editor</h1>
       <h4>{name}</h4>
-      <MyEditor code={exampleCode} language="javascript" onChange={useCallback(onCodeChange, [])} />
+      <div className={styles.EditorContainer} style={{ height: `${minHeight}vh` }}>
+        <MyEditor
+          code={exampleCode}
+          language="javascript"
+          onChange={useCallback(onCodeChange, [])}
+          minHeight={`${minHeight - padding / 4}vh`}
+          padding={padding}
+        />
+      </div>
     </section>
   );
 }
