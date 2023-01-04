@@ -4,18 +4,21 @@ import Highlight, { defaultProps } from 'prism-react-renderer';
 import theme from 'prism-react-renderer/themes/nightOwl';
 import styles from './MyEditor.module.scss';
 
-const exampleCode = `
-const baseValue = prompt('Enter the base of a triangle: ');
-const heightValue = prompt('Enter the height of a triangle: ');
+// TODO: Refactor component and remove redundant code that is meant to be in the parent component
+const exampleCode = `async function getData() {
+  try {
+    const response = await fetch('https://api.example.com/endpoint');
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}
 
-// calculate the area
-const areaValue = (baseValue * heightValue) / 2;
+getData()
+  .then(data => console.log(data))
+  .catch(error => console.error(error));
 
-console.log(
-  \`The area of the triangle is \${areaValue}\`
-);
-console.log("Hello");
-console.log("Hello");
 `.trim();
 
 const MyEditor = ({ language, minHeight, padding }) => {

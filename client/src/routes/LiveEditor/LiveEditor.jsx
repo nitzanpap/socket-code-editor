@@ -3,16 +3,20 @@ import styles from './LiveEditor.module.scss';
 import MyEditor from '../../components/MyEditor/MyEditor';
 import { useCallback, useState } from 'react';
 
-const exampleCode = `
-const baseValue = prompt('Enter the base of a triangle: ');
-const heightValue = prompt('Enter the height of a triangle: ');
+const exampleCode = `async function getData() {
+  try {
+    const response = await fetch('https://api.example.com/endpoint');
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}
 
-// calculate the area
-const areaValue = (baseValue * heightValue) / 2;
+getData()
+  .then(data => console.log(data))
+  .catch(error => console.error(error));
 
-console.log(
-  \`The area of the triangle is \${areaValue}\`
-);
 `.trim();
 
 function LiveEditor() {
