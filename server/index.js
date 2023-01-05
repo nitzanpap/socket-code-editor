@@ -1,5 +1,5 @@
-import express from 'express';
 import { createServer } from 'http';
+import express from 'express';
 import { Server } from 'socket.io';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -7,10 +7,6 @@ import morgan from 'morgan';
 import clc from 'cli-color';
 
 dotenv.config();
-
-const app = express();
-const server = createServer(app);
-const io = new Server(server);
 
 const morganFormat = morgan(function (tokens, req, res) {
   return [
@@ -23,9 +19,14 @@ const morganFormat = morgan(function (tokens, req, res) {
   ].join(' ');
 });
 
+const app = express();
+
 app.use(cors());
 app.use(morganFormat);
 app.use(express.json());
+
+const server = createServer(app);
+const io = new Server(server);
 
 // GET
 app.get('/', (req, res) => {
@@ -36,6 +37,12 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
   console.log('a user connected');
+  console.log(socket);
+  socket.emit('Hello', 'World');
+
+  socket.on('disconnect', () => {
+    console.log('A user disconnected');
+  });
 });
 
 server.listen(process.env.PORT, () => {
