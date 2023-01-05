@@ -1,13 +1,16 @@
 import { useParams } from 'react-router-dom';
 import styles from './LiveEditor.module.scss';
-import MyEditor from '../../components/MyEditor/MyEditor';
+import Editor from 'react-simple-code-editor';
+import Highlight, { defaultProps } from 'prism-react-renderer';
+import theme from 'prism-react-renderer/themes/nightOwl';
 import { useCallback, useEffect, useState } from 'react';
 import { getCodeBlock } from '../../api/crud';
 
 const exampleCode = `console.log('Hello World!');`.trim();
-  
+
 const minHeight = 50;
 const padding = 10;
+const language = 'javascript';
 
 function LiveEditor() {
   const { id } = useParams();
@@ -15,8 +18,26 @@ function LiveEditor() {
   const [code, setCode] = useState(exampleCode);
 
   const onCodeChange = async (newCode) => {
-    setCode(await getCodeBlock(id));
+    // TODO: Replace with socket call.
+    setCode(newCode);
+    console.log('Code changed!');
   };
+
+  const highlight = (code) => (
+    <Highlight {...defaultProps} theme={theme} code={code} language={language}>
+      {({ tokens, getLineProps, getTokenProps }) => (
+        <div style={{ minHeight: `${minHeight - padding / 4}vh` }}>
+          {tokens.map((line, i) => (
+            <div {...getLineProps({ line, key: i })}>
+              {line.map((token, key) => (
+                <span {...getTokenProps({ token, key })} />
+              ))}
+            </div>
+          ))}
+        </div>
+      )}
+    </Highlight>
+  );
 
   useEffect(() => {
     async function fetchData() {
@@ -32,12 +53,13 @@ function LiveEditor() {
       <h1>Live Editor</h1>
       <h4>{`${title}`}</h4>
       <div className={styles.EditorContainer} style={{ height: `${minHeight}vh` }}>
-        <MyEditor
-          code={exampleCode}
-          language="javascript"
-          onChange={useCallback(onCodeChange, [id])}
-          minHeight={`${minHeight - padding / 4}vh`}
+        <Editor
+          onValueChange={useCallback(onCodeChange, [])}
           padding={padding}
+          value={code}
+          highlight={useCallback(highlight, [])}
+          style={{ ...theme.plain }}
+          className={styles.Editor}
         />
       </div>
     </section>
