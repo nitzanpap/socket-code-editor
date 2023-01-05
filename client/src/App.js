@@ -28,7 +28,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing codeBlocksArr={codeBlocksArr} />} />
         <Route path="/live-editor/code-block" element={<LiveEditor />}>
-          <Route path=":name" element={<LiveEditor />} />
+          <Route path=":id" element={<LiveEditor />} />
         </Route>
         <Route path="*" element={<Page404 />} />
       </Routes>

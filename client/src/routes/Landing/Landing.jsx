@@ -1,7 +1,5 @@
-import Button from '../../components/Button/Button';
 import { getServer } from '../../api/crud';
 import styles from './Landing.module.scss';
-import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Card from '../../components/Card/Card';
 
@@ -10,13 +8,6 @@ function Landing({ codeBlocksArr }) {
   return (
     <section className={styles.Landing}>
       <h1 className={styles.title}>Choose code block:</h1>
-      <Button
-        text="Add New Code Block"
-        handleOnClick={useCallback(() => {
-          // TODO: Add functionality to button.
-          getServer();
-        }, [])}
-      ></Button>
       <section className={styles.CodeBlocksContainer}>
         {codeBlocksArr.map((codeBlockObj) => {
           return (
@@ -26,7 +17,7 @@ function Landing({ codeBlocksArr }) {
               className={styles.CodeBlockCard}
               key={codeBlockObj.id}
               onClick={() => {
-                navigate(`/live-editor/code-block/${codeBlockObj.title}`);
+                navigate(`/live-editor/code-block/${codeBlockObj.id}`);
               }}
             >
               <div className="AppLink">{codeBlockObj.title}</div>

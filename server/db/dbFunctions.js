@@ -14,9 +14,8 @@ export async function getAllCodeBlocksTitles() {
 }
 
 export async function getCodeBlock(id) {
-  console.log(id);
   try {
-    const queryStr = 'SELECT id, title, code FROM code_blocks;';
+    const queryStr = 'SELECT id, title, code FROM code_blocks WHERE id = $1;';
     const res = await pool.query(queryStr, [id]);
     const data = res.rows;
     return data;
