@@ -1,4 +1,3 @@
 import { app } from './httpServer.js';
-import { io, server } from './socketServer.js';
-
-const users = [];
+import { io, mentor, server } from './socketServer.js';
+import clc from 'cli-color';
