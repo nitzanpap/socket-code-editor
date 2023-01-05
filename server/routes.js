@@ -20,7 +20,6 @@ export const morganFormat = morgan(function (tokens, req, res) {
   ].join(' ');
 });
 
-// TODO: Reset this cors config only to the react deployed site, and to localhost:3000
 app.use(
   cors({ origin: ['http://localhost:3000', 'https://socket-code-editor.vercel.app/'] })
 );

@@ -8,8 +8,7 @@ export const mentor = { socketId: undefined };
 // Initializing webSocket server
 export const server = createServer(app);
 export const io = new Server(server, {
-  // TODO: Reset this cors config only to the react deployed site, and to localhost:3000
-  cors: { origin: ['http://localhost:3000', 'https://socket-code-editor-server.onrender.com/'] },
+  cors: { origin: ['http://localhost:3000', 'https://socket-code-editor.vercel.app/'] },
 });
 
 // The mentor is the first user to connect to the server.
