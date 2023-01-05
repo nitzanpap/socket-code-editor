@@ -7,6 +7,8 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AppHeader from './components/AppHeader/AppHeader';
 import { useEffect, useState } from 'react';
+import { getCodeBlocksTitles } from './api/crud';
+import { socket } from './api/socketHandler';
 
 function App() {
   const [codeBlocksArr, setCodeBlocksArr] = useState([]);
@@ -14,12 +16,10 @@ function App() {
   useEffect(() => {
     // TODO: Implement this to retrieve data from DB from the server
     console.log('Fetching');
-    setCodeBlocksArr([
-      { name: 'Async case' },
-      { name: 'Event loop' },
-      { name: 'Promise' },
-      { name: 'Generator function' },
-    ]);
+    async function connectToServer() {
+      setCodeBlocksArr(await getCodeBlocksTitles());
+    }
+    connectToServer();
   }, []);
 
   return (

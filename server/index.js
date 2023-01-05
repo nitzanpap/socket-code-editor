@@ -8,6 +8,9 @@ import clc from 'cli-color';
 
 dotenv.config();
 
+// Middleware
+
+// Console Formatting
 const morganFormat = morgan(function (tokens, req, res) {
   return [
     clc.yellow(tokens.method(req, res)),
@@ -21,12 +24,17 @@ const morganFormat = morgan(function (tokens, req, res) {
 
 const app = express();
 
+// TODO: Reset this cors config only to the react deployed site, and to localhost:3000
 app.use(cors());
+// app.use(cors({ origin: '*' }));
 app.use(morganFormat);
 app.use(express.json());
 
+// Initializing webSocket server
 const server = createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+  cors: { origin: 'http://localhost:3000' },
+});
 
 // GET
 app.get('/', (req, res) => {
@@ -35,13 +43,22 @@ app.get('/', (req, res) => {
   });
 });
 
+app.get('/code-blocks-titles', (req, res) => {
+  const data = [
+    { name: 'Async case' },
+    { name: 'Event loop' },
+    { name: 'Promise' },
+    { name: 'Generator function' },
+  ];
+  res.status(200).json(data);
+});
+
 io.on('connection', (socket) => {
-  console.log('a user connected');
-  console.log(socket);
-  socket.emit('Hello', 'World');
+  console.log(`User connected, socket id: ${clc.cyan(socket.id)}`);
+  socket.emit('Server Connect', 'Connected to socket.');
 
   socket.on('disconnect', () => {
-    console.log('A user disconnected');
+    console.log(`User disconnected, socket id: ${clc.cyan(socket.id)}`);
   });
 });
 
