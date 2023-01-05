@@ -1,10 +1,9 @@
-import Button from '@mui/material/Button';
+import Button from '../../components/Button/Button';
 import { getServer } from '../../api/crud';
 import styles from './Landing.module.scss';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Card from '../../components/Card/Card';
-import AddIcon from '@mui/icons-material/Add';
 
 function Landing({ codeBlocksArr }) {
   const navigate = useNavigate();
@@ -12,15 +11,12 @@ function Landing({ codeBlocksArr }) {
     <section className={styles.Landing}>
       <h1 className={styles.title}>Choose code block:</h1>
       <Button
-        variant="contained"
-        startIcon={<AddIcon />}
-        onClick={useCallback(() => {
+        text="Add New Code Block"
+        handleOnClick={useCallback(() => {
           // TODO: Add functionality to button.
           getServer();
         }, [])}
-      >
-        Add New Code Block
-      </Button>
+      ></Button>
       <section className={styles.CodeBlocksContainer}>
         {codeBlocksArr.map((codeBlockObj) => {
           return (
