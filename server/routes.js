@@ -22,7 +22,7 @@ export const morganFormat = morgan(function (tokens, req, res) {
 
 // TODO: Reset this cors config only to the react deployed site, and to localhost:3000
 app.use(
-  cors({ origin: ['http://localhost:3000', 'https://socket-code-editor-server.onrender.com/'] })
+  cors({ origin: ['http://localhost:3000', 'https://socket-code-editor.vercel.app/'] })
 );
 app.use(morganFormat);
 app.use(express.json());
