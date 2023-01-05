@@ -14,6 +14,5 @@ export async function getCodeBlocksTitles() {
   // TODO: replace dummy data with real data from DB
   const res = await axios.get(`${serverBaseUrl}/code-blocks-titles`);
   const data = res.data;
-  console.log(data);
   return data;
 }

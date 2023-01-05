@@ -1,7 +1,7 @@
+import { app } from './routes.js';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import clc from 'cli-color';
-import { app } from './httpServer.js';
 
 export const mentor = { socketId: undefined };
 
@@ -28,7 +28,7 @@ io.on('connection', (socket) => {
     });
     // Case of a Student connection
   } else {
-    socket.emit('Server Connect', 'Connected to socket as: Student');
+    socket.emit('Server Connect', 'Connected to socket as: Student', 1, 2);
     socket.on('disconnect', () => {
       console.log(`User disconnected: ${clc.cyan(socket.id)}`);
       printMentorId();
@@ -40,6 +40,7 @@ io.on('connection', (socket) => {
 server.listen(process.env.PORT, () => {
   console.log(`Server is listening on ${clc.yellow('http://localhost:' + process.env.PORT)}`);
 });
+
 function isMentor(id) {
   return mentor.socketId === undefined || id === mentor.socketId;
 }

@@ -28,12 +28,12 @@ function Landing({ codeBlocksArr }) {
               dark
               styling={{ width: 'min(10vh, 100px)', minWidth: 'fit-content', cursor: 'pointer' }}
               className={styles.CodeBlockCard}
-              key={codeBlockObj.name}
+              key={codeBlockObj.id}
               onClick={() => {
-                navigate(`/live-editor/code-block/${codeBlockObj.name}`);
+                navigate(`/live-editor/code-block/${codeBlockObj.title}`);
               }}
             >
-              <div className="AppLink">{codeBlockObj.name}</div>
+              <div className="AppLink">{codeBlockObj.title}</div>
             </Card>
           );
         })}

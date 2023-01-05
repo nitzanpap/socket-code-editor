@@ -1,15 +1,15 @@
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import morgan from 'morgan';
 import clc from 'cli-color';
+import { getAllCodeBlocksTitles } from './db/dbFunctions.js';
 
-dotenv.config();
+export const app = express();
 
 // Middleware
 
 // Console Formatting
-const morganFormat = morgan(function (tokens, req, res) {
+export const morganFormat = morgan(function (tokens, req, res) {
   return [
     clc.yellow(tokens.method(req, res)),
     clc.cyan(tokens.url(req, res)),
@@ -19,8 +19,6 @@ const morganFormat = morgan(function (tokens, req, res) {
     clc.italic(tokens['response-time'](req, res), 'ms'),
   ].join(' ');
 });
-
-export const app = express();
 
 // TODO: Reset this cors config only to the react deployed site, and to localhost:3000
 app.use(
@@ -36,12 +34,7 @@ app.get('/', (req, res) => {
   });
 });
 
-app.get('/code-blocks-titles', (req, res) => {
-  const data = [
-    { name: 'Async case' },
-    { name: 'Event loop' },
-    { name: 'Promise' },
-    { name: 'Generator function' },
-  ];
+app.get('/code-blocks-titles', async (req, res) => {
+  const data = await getAllCodeBlocksTitles();
   res.status(200).json(data);
 });
