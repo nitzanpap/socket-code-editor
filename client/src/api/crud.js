@@ -13,13 +13,11 @@ export async function getServer() {
 export async function getCodeBlocksTitles() {
   const res = await axios.get(`${serverBaseUrl}/api/get/code-blocks-titles`);
   const data = res.data;
-  console.log(data);
   return data;
 }
 
 export async function getCodeBlock(id) {
   const res = await axios.get(`${serverBaseUrl}/api/get/code-block:${id}`);
   const data = res.data;
-  console.log(data);
   return data;
 }
