@@ -8,7 +8,11 @@ export const mentor = { socketId: undefined };
 // Initializing webSocket server
 export const server = createServer(app);
 export const io = new Server(server, {
-  cors: { origin: ['http://localhost:3000', 'https://socket-code-editor.vercel.app/'] },
+  cors: {
+    origin: ['http://localhost:3000', 'https://socket-code-editor.vercel.app/'],
+    // TODO: This may expose the clients to a CSRF attack.
+    allowedHeaders: '*',
+  },
 });
 
 // The mentor is the first user to connect to the server.
