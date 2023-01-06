@@ -20,13 +20,7 @@ export const morganFormat = morgan(function (tokens, req, res) {
   ].join(' ');
 });
 
-app.use(
-  cors({
-    origin: ['http://localhost:3000', 'https://socket-code-editor.vercel.app/'],
-    // TODO: This may expose the clients to a CSRF attack.
-    allowedHeaders: '*',
-  })
-);
+app.use(cors());
 app.use(morganFormat);
 app.use(express.json());
 
