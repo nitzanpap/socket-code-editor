@@ -14,8 +14,6 @@ function App() {
   const [codeBlocksArr, setCodeBlocksArr] = useState([]);
 
   useEffect(() => {
-    // TODO: Refactor to indicate fetching code blocks through Toastify.
-    console.log('Fetching code blocks');
     async function connectToServer() {
       const notification = getLoadingToast('Connecting to server...');
       try {

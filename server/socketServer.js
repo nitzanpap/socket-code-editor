@@ -24,28 +24,36 @@ io.on('connection', (socket) => {
   // Handle mentor connect
   if (isMentor(socket.id)) {
     printUserSocket(true, socket.id);
-    socket.broadcast.emit('user connected', 'mentor');
+
+    socket.broadcast.emit('New User Connected', 'mentor');
     mentor.socketId = socket.id;
     socket.emit('Server Connect', { type: 'mentor' });
+
     // Handle mentor disconnect
     socket.on('disconnect', () => {
       console.log(`User disconnected: ${clc.greenBright(socket.id)}`);
+      socket.broadcast.emit('User Disconnected', 'mentor');
       mentor.socketId = undefined;
       printMentorId(mentor.socketId);
     });
+
     // Handle student connect
   } else {
     printUserSocket(false, socket.id);
-    socket.broadcast.emit('user connected', 'student');
+
+    socket.broadcast.emit('New User Connected', 'student');
     socket.emit('Server Connect', { type: 'student' });
+
     // If the student changes his code, send the changes to the mentor
     socket.on('Code Change', (newCode) => {
       console.log('New code received.');
       io.to(mentor.socketId).emit('Code Change', newCode);
     });
+
     // Handle student disconnect
     socket.on('disconnect', () => {
       console.log(`User disconnected: ${clc.cyan(socket.id)}`);
+      socket.broadcast.emit('User Disconnected', 'student');
     });
   }
 });

@@ -7,6 +7,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { getCodeBlock, serverBaseUrl } from '../../api/crud';
 import io from 'socket.io-client';
 import usePageLeave from '../../hooks/usePageLeave';
+import { toast } from 'react-toastify';
+import { notificationOptions } from '../../utils/helperFunctions';
 
 // Connect to the socket server
 export const socket = io(serverBaseUrl);
@@ -15,7 +17,16 @@ let userType = undefined;
 // Indicate a successful connection
 socket.on('Server Connect', (connectionInfo) => {
   userType = connectionInfo.type;
-  console.log('Connected as:', userType);
+  const notify = toast(`You have connected as a ${connectionInfo.type}.`, notificationOptions);
+});
+
+// Indicate a successful connection
+socket.on('New User Connected', (type) => {
+  const notify = toast(`A ${type} has connected.`, notificationOptions);
+});
+// Indicate a successful connection
+socket.on('User Disconnected', (type) => {
+  const notify = toast(`A ${type} has disconnected.`, notificationOptions);
 });
 
 // Emit new code to the socket server
@@ -38,7 +49,6 @@ function LiveEditor() {
   // Handle code change in editor.
   const onCodeChange = async (newCode) => {
     setCode(newCode);
-    console.log('Code changed!');
     emitNewCodeToServer(newCode);
   };
 
@@ -99,7 +109,7 @@ function LiveEditor() {
           readOnly={userType !== 'student'}
         />
       </div>
-      {/* <HighlightedCode code={code} language={language} /> */}
+      <h3 className={styles.userType}>Hello, {userType[0].toUpperCase() + userType.slice(1)}</h3>
     </section>
   );
 }
