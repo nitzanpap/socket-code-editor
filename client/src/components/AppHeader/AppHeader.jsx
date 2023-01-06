@@ -11,9 +11,6 @@ function AppHeader({ text, stylingClass, handleOnClick, disabled = false }) {
           <Link className={`AppLink`} to="/">
             Landing
           </Link>
-          <Link className={`AppLink`} to="/live-editor/code-block">
-            Live Editor
-          </Link>
         </nav>
       </div>
       <p>Socket Code Editor</p>

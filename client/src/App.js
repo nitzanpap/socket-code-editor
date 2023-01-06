@@ -8,7 +8,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import AppHeader from './components/AppHeader/AppHeader';
 import { useEffect, useState } from 'react';
 import { getCodeBlocksTitles } from './api/crud';
-import { socket } from './api/socketHandler';
 
 function App() {
   const [codeBlocksArr, setCodeBlocksArr] = useState([]);
@@ -27,7 +26,7 @@ function App() {
       <AppHeader />
       <Routes>
         <Route path="/" element={<Landing codeBlocksArr={codeBlocksArr} />} />
-        <Route path="/live-editor/code-block" element={<LiveEditor />}>
+        <Route path="/live-editor/code-block">
           <Route path=":id" element={<LiveEditor />} />
         </Route>
         <Route path="*" element={<Page404 />} />

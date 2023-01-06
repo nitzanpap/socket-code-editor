@@ -4,11 +4,26 @@ import Editor from 'react-simple-code-editor';
 import Highlight, { defaultProps } from 'prism-react-renderer';
 import theme from 'prism-react-renderer/themes/nightOwl';
 import { useCallback, useEffect, useState } from 'react';
-import { getCodeBlock } from '../../api/crud';
-import { emitNewCodeToServer, socket } from '../../api/socketHandler';
+import { getCodeBlock, serverBaseUrl } from '../../api/crud';
+import io from 'socket.io-client';
+import usePageLeave from '../../hooks/usePageLeave';
 
-const exampleCode = `console.log('Hello World!');`.trim();
+// Connect to the socket server
+export const socket = io(serverBaseUrl);
+let userType = undefined;
 
+// Indicate a successful connection
+socket.on('Server Connect', (connectionInfo) => {
+  userType = connectionInfo.type;
+  console.log('Connected as:', userType);
+});
+
+// Emit new code to the socket server
+function emitNewCodeToServer(newCode) {
+  socket.emit('Code Change', newCode);
+}
+
+// Props for <Editor> component.
 const minHeight = 50;
 const padding = 10;
 const language = 'javascript';
@@ -16,7 +31,16 @@ const language = 'javascript';
 function LiveEditor() {
   const { id } = useParams();
   const [title, setTitle] = useState('');
-  const [code, setCode] = useState(exampleCode);
+  const [code, setCode] = useState('');
+
+  usePageLeave();
+
+  // Handle code change in editor.
+  const onCodeChange = async (newCode) => {
+    setCode(newCode);
+    console.log('Code changed!');
+    emitNewCodeToServer(newCode);
+  };
 
   // Handle receiving new code.
   function receiveNewCode() {
@@ -26,15 +50,9 @@ function LiveEditor() {
     });
   }
 
-  const onCodeChange = async (newCode) => {
-    setCode(newCode);
-    console.log('Code changed!');
-    emitNewCodeToServer(newCode);
-  };
-
+  // Get initial code block from the db.
   useEffect(() => {
     async function fetchData() {
-      // Get initial code block from the db.
       const newCodeBlock = await getCodeBlock(id);
       setTitle(newCodeBlock[0].title);
       setCode(newCodeBlock[0].code);
@@ -45,7 +63,13 @@ function LiveEditor() {
 
   // Converts the code to a highlighted one.
   const highlight = (code) => (
-    <Highlight {...defaultProps} theme={theme} code={code} language={language}>
+    <Highlight
+      {...defaultProps}
+      theme={theme}
+      code={code}
+      language={language}
+      contentEditable={false}
+    >
       {({ tokens, getLineProps, getTokenProps }) => (
         <div style={{ minHeight: `${minHeight - padding / 4}vh` }}>
           {tokens.map((line, i) => (
@@ -72,8 +96,10 @@ function LiveEditor() {
           highlight={useCallback(highlight, [])}
           style={{ ...theme.plain }}
           className={styles.Editor}
+          readOnly={userType !== 'student'}
         />
       </div>
+      {/* <HighlightedCode code={code} language={language} /> */}
     </section>
   );
 }
