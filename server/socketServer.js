@@ -45,9 +45,10 @@ io.on('connection', (socket) => {
     socket.emit('Server Connect', { type: 'student' });
 
     // If the student changes his code, send the changes to the mentor
-    socket.on('Code Change', (newCode) => {
+    socket.on('Code Change', (jsonObj) => {
+      const obj = JSON.parse(jsonObj);
       console.log('New code received.');
-      io.to(mentor.socketId).emit('Code Change', newCode);
+      io.to(mentor.socketId).emit(`Code Change in ${obj.codeBlockId}`, obj.newCode);
     });
 
     // Handle student disconnect

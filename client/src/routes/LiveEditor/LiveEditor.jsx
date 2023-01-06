@@ -20,18 +20,18 @@ socket.on('Server Connect', (connectionInfo) => {
   const notify = toast(`You have connected as a ${connectionInfo.type}.`, notificationOptions);
 });
 
-// Indicate a successful connection
+// Notify a new user connection
 socket.on('New User Connected', (type) => {
   const notify = toast(`A ${type} has connected.`, notificationOptions);
 });
-// Indicate a successful connection
+// Notify a user disconnection
 socket.on('User Disconnected', (type) => {
   const notify = toast(`A ${type} has disconnected.`, notificationOptions);
 });
 
 // Emit new code to the socket server
-function emitNewCodeToServer(newCode) {
-  socket.emit('Code Change', newCode);
+function emitNewCodeToServer(newCode, codeBlockId) {
+  socket.emit('Code Change', JSON.stringify({ newCode: newCode, codeBlockId: codeBlockId }));
 }
 
 // Props for <Editor> component.
@@ -49,12 +49,12 @@ function LiveEditor() {
   // Handle code change in editor.
   const onCodeChange = async (newCode) => {
     setCode(newCode);
-    emitNewCodeToServer(newCode);
+    emitNewCodeToServer(newCode, id);
   };
 
   // Handle receiving new code.
   function receiveNewCode() {
-    socket.on('Code Change', (newCode) => {
+    socket.on(`Code Change in ${id}`, (newCode) => {
       console.log('New code received!');
       setCode(newCode);
     });
