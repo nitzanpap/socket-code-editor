@@ -6,6 +6,7 @@ import './assets/global.scss';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  // In a real application I would remove the <React.StrictMode> component to avoid rendering twice.
   <React.StrictMode>
     <BrowserRouter>
       <App />

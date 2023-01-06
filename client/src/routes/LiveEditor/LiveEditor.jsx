@@ -5,6 +5,7 @@ import Highlight, { defaultProps } from 'prism-react-renderer';
 import theme from 'prism-react-renderer/themes/nightOwl';
 import { useCallback, useEffect, useState } from 'react';
 import { getCodeBlock } from '../../api/crud';
+import { emitNewCodeToServer, socket } from '../../api/socketHandler';
 
 const exampleCode = `console.log('Hello World!');`.trim();
 
@@ -17,12 +18,32 @@ function LiveEditor() {
   const [title, setTitle] = useState('');
   const [code, setCode] = useState(exampleCode);
 
+  // Handle receiving new code.
+  function receiveNewCode() {
+    socket.on('Code Change', (newCode) => {
+      console.log('New code received!');
+      setCode(newCode);
+    });
+  }
+
   const onCodeChange = async (newCode) => {
-    // TODO: Replace with socket call.
     setCode(newCode);
     console.log('Code changed!');
+    emitNewCodeToServer(newCode);
   };
 
+  useEffect(() => {
+    async function fetchData() {
+      // Get initial code block from the db.
+      const newCodeBlock = await getCodeBlock(id);
+      setTitle(newCodeBlock[0].title);
+      setCode(newCodeBlock[0].code);
+      receiveNewCode();
+    }
+    fetchData();
+  }, [id]);
+
+  // Converts the code to a highlighted one.
   const highlight = (code) => (
     <Highlight {...defaultProps} theme={theme} code={code} language={language}>
       {({ tokens, getLineProps, getTokenProps }) => (
@@ -38,15 +59,6 @@ function LiveEditor() {
       )}
     </Highlight>
   );
-
-  useEffect(() => {
-    async function fetchData() {
-      const newCodeBlock = await getCodeBlock(id);
-      setTitle(newCodeBlock[0].title);
-      setCode(newCodeBlock[0].code);
-    }
-    fetchData();
-  }, [id]);
 
   return (
     <section className={styles.LiveEditor}>

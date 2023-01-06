@@ -20,6 +20,7 @@ export const morganFormat = morgan(function (tokens, req, res) {
   ].join(' ');
 });
 
+// TODO: Rewrite cors configuration to only allow the local and deployed frontend origins
 app.use(cors());
 app.use(morganFormat);
 app.use(express.json());

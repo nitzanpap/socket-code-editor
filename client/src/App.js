@@ -14,8 +14,8 @@ function App() {
   const [codeBlocksArr, setCodeBlocksArr] = useState([]);
 
   useEffect(() => {
-    // TODO: Implement this to retrieve data from DB from the server
-    console.log('Fetching');
+    // TODO: Refactor to indicate fetching code blocks through Toastify.
+    console.log('Fetching code blocks');
     async function connectToServer() {
       setCodeBlocksArr(await getCodeBlocksTitles());
     }
