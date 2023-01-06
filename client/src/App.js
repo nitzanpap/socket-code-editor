@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import AppHeader from './components/AppHeader/AppHeader';
 import { useEffect, useState } from 'react';
 import { getCodeBlocksTitles } from './api/crud';
+import { getLoadingToast, updateToast } from './utils/helperFunctions';
 
 function App() {
   const [codeBlocksArr, setCodeBlocksArr] = useState([]);
@@ -16,7 +17,14 @@ function App() {
     // TODO: Refactor to indicate fetching code blocks through Toastify.
     console.log('Fetching code blocks');
     async function connectToServer() {
-      setCodeBlocksArr(await getCodeBlocksTitles());
+      const notification = getLoadingToast('Connecting to server...');
+      try {
+        setCodeBlocksArr(await getCodeBlocksTitles());
+        updateToast(notification, `Connected.`).success();
+      } catch (error) {
+        console.log(error);
+        updateToast(notification, 'Connection failed.').fail();
+      }
     }
     connectToServer();
   }, []);

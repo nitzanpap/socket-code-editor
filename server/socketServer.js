@@ -24,8 +24,9 @@ io.on('connection', (socket) => {
   // Handle mentor connect
   if (isMentor(socket.id)) {
     printUserSocket(true, socket.id);
+    socket.broadcast.emit('user connected', 'mentor');
     mentor.socketId = socket.id;
-    socket.emit('Server Connect', {type: 'mentor'});
+    socket.emit('Server Connect', { type: 'mentor' });
     // Handle mentor disconnect
     socket.on('disconnect', () => {
       console.log(`User disconnected: ${clc.greenBright(socket.id)}`);
@@ -35,7 +36,8 @@ io.on('connection', (socket) => {
     // Handle student connect
   } else {
     printUserSocket(false, socket.id);
-    socket.emit('Server Connect', {type: 'student'});
+    socket.broadcast.emit('user connected', 'student');
+    socket.emit('Server Connect', { type: 'student' });
     // If the student changes his code, send the changes to the mentor
     socket.on('Code Change', (newCode) => {
       console.log('New code received.');
