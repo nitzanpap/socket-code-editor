@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-export const serverBaseUrl = process.env.REACT_APP_SERVER_BASE_URL;
+export const serverBaseUrl = import.meta.env.VITE_SERVER_BASE_URL;
 
 export async function getServer() {
-  console.log('Server:', process.env.REACT_APP_SERVER_BASE_URL);
+  console.log('Server:', serverBaseUrl);
   const res = await axios.get(`${serverBaseUrl}/`);
   const data = res.data;
   console.log(data);
