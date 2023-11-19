@@ -85,7 +85,8 @@ function LiveEditor() {
           {tokens.map((line, i) => (
             <div key={i} {...getLineProps({ line, key: i })}>
               {line.map((token, lineIndex) => (
-                <span key={lineIndex}{...getTokenProps({ token, lineIndex })} />
+                // eslint-disable-next-line react/jsx-key
+                <span {...getTokenProps({ token, lineIndex })} />
               ))}
             </div>
           ))}
@@ -109,7 +110,7 @@ function LiveEditor() {
           readOnly={userType !== 'student'}
         />
       </div>
-      <h3 className={styles.userType}>Hello, {userType[0].toUpperCase() + userType.slice(1)}</h3>
+      <h3 className={styles.userType}>Hello, {userType ? userType[0].toUpperCase() + userType.slice(1): 'Student'}</h3>
     </section>
   );
 }
