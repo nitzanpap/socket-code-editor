@@ -17,16 +17,16 @@ let userType = undefined;
 // Indicate a successful connection
 socket.on('Server Connect', (connectionInfo) => {
   userType = connectionInfo.type;
-  const notify = toast(`You have connected as a ${connectionInfo.type}.`, notificationOptions);
+  toast(`You have connected as a ${connectionInfo.type}.`, notificationOptions);
 });
 
 // Notify a new user connection
 socket.on('New User Connected', (type) => {
-  const notify = toast(`A ${type} has connected.`, notificationOptions);
+  toast(`A ${type} has connected.`, notificationOptions);
 });
 // Notify a user disconnection
 socket.on('User Disconnected', (type) => {
-  const notify = toast(`A ${type} has disconnected.`, notificationOptions);
+  toast(`A ${type} has disconnected.`, notificationOptions);
 });
 
 // Emit new code to the socket server
@@ -83,9 +83,9 @@ function LiveEditor() {
       {({ tokens, getLineProps, getTokenProps }) => (
         <div style={{ minHeight: `${minHeight - padding / 4}vh` }}>
           {tokens.map((line, i) => (
-            <div {...getLineProps({ line, key: i })}>
-              {line.map((token, key) => (
-                <span {...getTokenProps({ token, key })} />
+            <div key={i} {...getLineProps({ line, key: i })}>
+              {line.map((token, lineIndex) => (
+                <span key={lineIndex}{...getTokenProps({ token, lineIndex })} />
               ))}
             </div>
           ))}
