@@ -3,11 +3,19 @@ import { createServer } from 'http';
 import { Server } from 'socket.io';
 import clc from 'cli-color';
 import { printMentorId, printUserSocket } from './utils/loggingFunctions.js';
+import { createTable, createExampleCodeBlocks, updateCodeBlock } from './db/dbFunctions.js';
 
 export const mentor = { socketId: undefined };
 
 // Initializing webSocket server
 export const server = createServer(app);
+
+try {
+  await createTable();
+  await createExampleCodeBlocks();
+} catch (error) {
+  console.log(error);
+}
 
 // TODO: Rewrite cors configuration to only allow the local and deployed frontend origins
 export const io = new Server(server, {
@@ -44,11 +52,15 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('New User Connected', 'student');
     socket.emit('Server Connect', { type: 'student' });
 
-    // If the student changes his code, send the changes to the mentor
-    socket.on('Code Change', (jsonObj) => {
+    // If the student changes his code, send the changes to all connected users
+    socket.on('Code Change', async (jsonObj) => {
       const obj = JSON.parse(jsonObj);
       console.log('New code received.');
-      io.to(mentor.socketId).emit(`Code Change in ${obj.codeBlockId}`, obj.newCode);
+      await updateCodeBlock(obj.codeBlockId, obj.newCode);
+      io.emit(
+        `Code Change in ${obj.codeBlockId}`,
+        obj.newCode
+      );
     });
 
     // Handle student disconnect
@@ -60,7 +72,11 @@ io.on('connection', (socket) => {
 });
 
 server.listen(process.env.PORT, () => {
-  console.log(`Server is listening on ${clc.yellow('http://localhost:' + process.env.PORT)}`);
+  console.log(
+    `Server is listening on ${clc.yellow(
+      'http://localhost:' + process.env.PORT
+    )}`
+  );
 });
 
 function isMentor(id) {

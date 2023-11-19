@@ -18,10 +18,19 @@ export async function getAllCodeBlocksTitles() {
 
 export async function getCodeBlock(id) {
   try {
-    const queryStr = 'SELECT id, title, code FROM code_blocks WHERE id = $1;';
+    const queryStr = 'SELECT id, title, code, solution FROM code_blocks WHERE id = $1;';
     const res = await pool.query(queryStr, [id]);
     const data = res.rows;
     return data;
+  } catch (err) {
+    return console.error('Error executing query', err.stack);
+  }
+}
+
+export const updateCodeBlock = async (id, newCode) => {
+  try {
+    const queryStr = 'UPDATE code_blocks SET code = $1 WHERE id = $2;';
+    await pool.query(queryStr, [newCode, id]);
   } catch (err) {
     return console.error('Error executing query', err.stack);
   }
@@ -42,7 +51,7 @@ export const createExampleCodeBlocks = async () => {
       await pool.query(createCodeBlockQueryStr, [
         codeBlock.title,
         codeBlock.code,
-        null,
+        codeBlock.code,
       ]);
     }
   } catch (err) {

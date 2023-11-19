@@ -2,7 +2,7 @@ export const mockCodeBlocks = [
   {
     title: 'Async',
     code: `console.log('Hello World');
-    'async function getData() {
+    async function getData() {
     try {
       const response = await fetch('https://api.example.com/endpoint');
       const data = await response.json();

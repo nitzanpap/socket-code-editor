@@ -50,7 +50,6 @@ app.get('/api/get/code-block:id', async (req, res) => {
 
 app.get('/db/createInitialData', async (req, res) => {
   try {
-    
     await createTable();
     await createExampleCodeBlocks();
     res.status(200).json({
