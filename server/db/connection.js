@@ -10,7 +10,12 @@ export const pool = new pg.Pool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   ssl: true,
+  min: 0,
   max: 20,
-  idleTimeoutMillis: 0,
+  idleTimeoutMillis: 8000,
   connectionTimeoutMillis: 0,
+  createTimeoutMillis: 8000,
+  acquireTimeoutMillis: 8000,
+  reapIntervalMillis: 1000,
+  createRetryIntervalMillis: 100,
 });
