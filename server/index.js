@@ -57,7 +57,7 @@ io.on('connection', (socket) => {
       const obj = JSON.parse(jsonObj);
       console.log('New code received.');
       await updateCodeBlock(obj.codeBlockId, obj.newCode);
-      io.emit(
+      socket.broadcast.emit(
         `Code Change in ${obj.codeBlockId}`,
         obj.newCode
       );
