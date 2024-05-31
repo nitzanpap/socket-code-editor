@@ -10,8 +10,11 @@ export function printUserSocket(isMentor, id) {
     : console.log(`${clc.magenta('Student')} connected: ${clc.cyan(id)}`);
 }
 
-export const replaceMostStrWithAsterisks = (str) => {
-  const firstChar = str[0];
-  const lastChar = str[str.length - 1];
-  return firstChar + '*'.repeat(str.length - 2) + lastChar;
-};
+export function loadEnvVars() {
+  const dotenvLoadResult = dotenv.config();
+  if (dotenvLoadResult.error) {
+    throw dotenvLoadResult.error;
+  } else if (dotenvLoadResult.parsed) {
+    console.log('Environment variables loaded successfully.');
+  }
+}

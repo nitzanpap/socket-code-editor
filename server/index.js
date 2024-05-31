@@ -1,5 +1,4 @@
 import clc from 'cli-color';
-import dotenv from 'dotenv';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import { pool } from './db/connection.js';
@@ -8,27 +7,10 @@ import { app } from './routes.js';
 import {
   printMentorId,
   printUserSocket,
-  replaceMostStrWithAsterisks,
+  loadEnvVars,
 } from './utils/loggingFunctions.js';
 
-dotenv.config();
-console.log('Connecting to database...');
-const printEnvVars = () => {
-  const DB_DB_NAME = replaceMostStrWithAsterisks(process.env.DB_DB_NAME);
-  const DB_HOST = replaceMostStrWithAsterisks(process.env.DB_HOST);
-  const DB_PORT = replaceMostStrWithAsterisks(process.env.DB_PORT);
-  const DB_USER = replaceMostStrWithAsterisks(process.env.DB_USER);
-  const DB_PASSWORD = replaceMostStrWithAsterisks(process.env.DB_PASSWORD);
-
-  console.log(`
-  DB_DB_NAME: ${clc.yellow(DB_DB_NAME)}
-  DB_HOST: ${clc.yellow(DB_HOST)}
-  DB_PORT: ${clc.yellow(DB_PORT)}
-  DB_USER: ${clc.yellow(DB_USER)}
-  DB_PASSWORD: ${clc.yellow(DB_PASSWORD)}
-  `);
-};
-printEnvVars();
+loadEnvVars();
 await pool.connect();
 console.log('Database connected!');
 try {
