@@ -1,16 +1,13 @@
 import clc from 'cli-color';
+import dotenv from 'dotenv';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import { pool } from './db/connection.js';
 import { createInitialData, updateCodeBlock } from './db/dbFunctions.js';
 import { app } from './routes.js';
-import {
-  printMentorId,
-  printUserSocket,
-  loadEnvVars,
-} from './utils/loggingFunctions.js';
+import { printMentorId, printUserSocket } from './utils/loggingFunctions.js';
 
-loadEnvVars();
+dotenv.config();
 await pool.connect();
 console.log('Database connected!');
 try {
