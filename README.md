@@ -5,6 +5,8 @@ A full stack home assignment.
 To view the front end app click [Here](https://socket-code-editor.vercel.app/). :point_left:
 To view the server click [Here](https://socket-code-editor-server.onrender.com/). :point_left:
 
+Note that this might take a minute to load, since I am hosting this on a free serverless provider :)
+
 ## Demo
 
 
