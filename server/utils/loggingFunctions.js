@@ -1,4 +1,5 @@
 import clc from 'cli-color';
+import dotenv from 'dotenv';
 
 export function printMentorId(id) {
   console.log(`Current ${clc.yellow('Mentor')}: ${clc.greenBright(id)}`);
