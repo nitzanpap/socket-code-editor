@@ -4,8 +4,6 @@ import createCodeBlockQueryStr from './sqlQueries/create/createCodeBlock.js';
 import createCodeBlocksTableQueryStr from './sqlQueries/create/createTable.js';
 import getAllCodeBlocksQueryStr from './sqlQueries/read/readCodeBlocksTableTitles.js';
 
-await pool.connect();
-
 export async function getAllCodeBlocksTitles() {
   try {
     const res = await pool.query(getAllCodeBlocksQueryStr);

@@ -1,20 +1,25 @@
-import { app } from './routes.js';
+import clc from 'cli-color';
+import dotenv from 'dotenv';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
-import clc from 'cli-color';
-import { printMentorId, printUserSocket } from './utils/loggingFunctions.js';
+import { pool } from './db/connection.js';
 import { createInitialData, updateCodeBlock } from './db/dbFunctions.js';
+import { app } from './routes.js';
+import { printMentorId, printUserSocket } from './utils/loggingFunctions.js';
+
+dotenv.config();
+await pool.connect();
+console.log('Connected to database');
+try {
+  createInitialData(pool);
+} catch (error) {
+  console.log(error);
+}
 
 export const mentor = { socketId: undefined };
 
 // Initializing webSocket server
 export const server = createServer(app);
-
-try {
-  createInitialData();
-} catch (error) {
-  console.log(error);
-}
 
 // TODO: Rewrite cors configuration to only allow the local and deployed frontend origins
 export const io = new Server(server, {
@@ -56,10 +61,7 @@ io.on('connection', (socket) => {
       const obj = JSON.parse(jsonObj);
       console.log('New code received.');
       await updateCodeBlock(obj.codeBlockId, obj.newCode);
-      socket.broadcast.emit(
-        `Code Change in ${obj.codeBlockId}`,
-        obj.newCode
-      );
+      socket.broadcast.emit(`Code Change in ${obj.codeBlockId}`, obj.newCode);
     });
 
     // Handle student disconnect
