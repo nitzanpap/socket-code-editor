@@ -9,7 +9,10 @@ export const pool = new pg.Pool({
   database: process.env.DB_DB_NAME,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
-  ssl: true,
+  ssl: {
+    rejectUnauthorized: false,
+    ca: process.env.NODE_EXTRA_CA_CERT_PATH,
+  },
   min: 0,
   max: 20,
   idleTimeoutMillis: 8000,

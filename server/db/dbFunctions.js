@@ -36,7 +36,16 @@ export const updateCodeBlock = async (id, newCode) => {
   }
 }
 
-export async function createTable() {
+export async function createInitialData(){
+  try {
+    await createTable();
+    await createExampleCodeBlocks();
+  } catch (err) {
+    console.error('Error executing query', err.stack);
+  }
+}
+
+async function createTable() {
   try {
     await pool.query(createTableQueryStr);
   } catch (err) {
@@ -44,7 +53,7 @@ export async function createTable() {
   }
 }
 
-export const createExampleCodeBlocks = async () => {
+const createExampleCodeBlocks = async () => {
   try {
     const codeBlocks = mockCodeBlocks;
     for (const codeBlock of codeBlocks) {

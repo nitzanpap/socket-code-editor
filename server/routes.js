@@ -3,8 +3,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import clc from 'cli-color';
 import {
-  createExampleCodeBlocks,
-  createTable,
+  createInitialData,
   getAllCodeBlocksTitles,
   getCodeBlock,
 } from './db/dbFunctions.js';
@@ -50,8 +49,7 @@ app.get('/api/get/code-block:id', async (req, res) => {
 
 app.get('/db/createInitialData', async (req, res) => {
   try {
-    await createTable();
-    await createExampleCodeBlocks();
+    await createInitialData();
     res.status(200).json({
       message: 'Table created successfully',
     });

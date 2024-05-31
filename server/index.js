@@ -3,7 +3,7 @@ import { createServer } from 'http';
 import { Server } from 'socket.io';
 import clc from 'cli-color';
 import { printMentorId, printUserSocket } from './utils/loggingFunctions.js';
-import { createTable, createExampleCodeBlocks, updateCodeBlock } from './db/dbFunctions.js';
+import { createInitialData, updateCodeBlock } from './db/dbFunctions.js';
 
 export const mentor = { socketId: undefined };
 
@@ -11,8 +11,7 @@ export const mentor = { socketId: undefined };
 export const server = createServer(app);
 
 try {
-  await createTable();
-  await createExampleCodeBlocks();
+  createInitialData();
 } catch (error) {
   console.log(error);
 }
