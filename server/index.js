@@ -8,8 +8,9 @@ import { app } from './routes.js';
 import { printMentorId, printUserSocket } from './utils/loggingFunctions.js';
 
 dotenv.config();
+console.log('Connecting to database...');
 await pool.connect();
-console.log('Connected to database');
+console.log('Database connected!');
 try {
   createInitialData(pool);
 } catch (error) {
