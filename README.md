@@ -5,6 +5,13 @@ A full stack home assignment.
 To view the front end app click [Here](https://socket-code-editor.vercel.app/). :point_left:
 To view the server click [Here](https://socket-code-editor-server.onrender.com/). :point_left:
 
+## Demo
+
+
+https://github.com/nitzanpap/socket-code-editor/assets/87342833/296e0f76-7238-416f-8a2a-2defcf231609
+
+
+
 ## Local installation
 
 1. **Clone the repo**
