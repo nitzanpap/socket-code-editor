@@ -1,7 +1,7 @@
 import { pool } from './connection.js';
 import { mockCodeBlocks } from './mock/mockCodeBlocks.js';
 import createCodeBlockQueryStr from './sqlQueries/create/createCodeBlock.js';
-import createTableQueryStr from './sqlQueries/create/createTable.js';
+import createCodeBlocksTableQueryStr from './sqlQueries/create/createTable.js';
 import getAllCodeBlocksQueryStr from './sqlQueries/read/readCodeBlocksTableTitles.js';
 
 await pool.connect();
@@ -18,7 +18,8 @@ export async function getAllCodeBlocksTitles() {
 
 export async function getCodeBlock(id) {
   try {
-    const queryStr = 'SELECT id, title, code, solution FROM code_blocks WHERE id = $1;';
+    const queryStr =
+      'SELECT id, title, code, solution FROM code_blocks WHERE id = $1;';
     const res = await pool.query(queryStr, [id]);
     const data = res.rows;
     return data;
@@ -34,21 +35,25 @@ export const updateCodeBlock = async (id, newCode) => {
   } catch (err) {
     return console.error('Error executing query', err.stack);
   }
-}
+};
 
-export async function createInitialData(){
+export async function createInitialData() {
   try {
-    await createTable();
+    await createCodeBlocksTable();
     await createExampleCodeBlocks();
   } catch (err) {
     console.error('Error executing query', err.stack);
   }
 }
 
-async function createTable() {
+async function createCodeBlocksTable() {
   try {
-    await pool.query(createTableQueryStr);
+    await pool.query(createCodeBlocksTableQueryStr);
   } catch (err) {
+    if (err.code === '42P07') {
+      console.log('Code blocks table already exists');
+      return;
+    }
     console.error('Error executing query', err.stack);
   }
 }
