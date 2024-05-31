@@ -13,9 +13,12 @@ export function printUserSocket(isMentor, id) {
 
 export function loadEnvVars() {
   const dotenvLoadResult = dotenv.config();
+  if (dotenvLoadResult.parsed) {
+    console.log('Environment variables loaded successfully.');
+    return;
+  }
   if (dotenvLoadResult.error) {
     throw dotenvLoadResult.error;
-  } else if (dotenvLoadResult.parsed) {
-    console.log('Environment variables loaded successfully.');
   }
+  console.log('Environment variables not loaded.');
 }
