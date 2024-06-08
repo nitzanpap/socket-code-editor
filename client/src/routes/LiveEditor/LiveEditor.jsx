@@ -86,8 +86,7 @@ function LiveEditor() {
           {tokens.map((line, i) => (
             <div key={i} {...getLineProps({ line, key: i })}>
               {line.map((token, lineIndex) => (
-                // eslint-disable-next-line react/jsx-key
-                <span key={lineIndex} {...getTokenProps({ token, lineIndex })} />
+                <span key={lineIndex} {...getTokenProps({ token })} />
               ))}
             </div>
           ))}
