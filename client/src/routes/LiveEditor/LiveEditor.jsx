@@ -54,15 +54,15 @@ function LiveEditor() {
   }
 
   // Handle receiving new code.
-  function receiveNewCode() {
-    socket.on(`Code Change in ${id}`, (newCode) => {
-      console.log("New code received!")
-      setCode(newCode)
-    })
-  }
 
   // Get initial code block from the db.
   useEffect(() => {
+    const receiveNewCode = () => {
+      socket.on(`Code Change in ${id}`, (newCode) => {
+        console.log("New code received!")
+        setCode(newCode)
+      })
+    }
     async function fetchData() {
       const newCodeBlock = await getCodeBlock(id)
       setTitle(newCodeBlock[0].title)
