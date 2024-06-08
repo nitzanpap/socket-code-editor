@@ -1,27 +1,27 @@
-import styles from './App.module.scss';
-import { Route, Routes } from 'react-router-dom';
-import Landing from './routes/Landing/Landing';
-import Page404 from './routes/Page404/Page404';
-import LiveEditor from './routes/LiveEditor/LiveEditor';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import AppHeader from './components/AppHeader/AppHeader';
-import { useEffect, useState } from 'react';
-import { getCodeBlocksTitles } from './api/crud';
-import { getLoadingToast, updateToast } from './utils/helperFunctions';
+import styles from "./App.module.scss";
+import { Route, Routes } from "react-router-dom";
+import Landing from "./routes/Landing/Landing";
+import Page404 from "./routes/Page404/Page404";
+import LiveEditor from "./routes/LiveEditor/LiveEditor";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import AppHeader from "./components/AppHeader/AppHeader";
+import { useEffect, useState } from "react";
+import { getCodeBlocksTitles } from "./api/crud";
+import { getLoadingToast, updateToast } from "./utils/helperFunctions";
 
 function App() {
   const [codeBlocksArr, setCodeBlocksArr] = useState([]);
 
   useEffect(() => {
     async function connectToServer() {
-      const notification = getLoadingToast('Connecting to server...');
+      const notification = getLoadingToast("Connecting to server...");
       try {
         setCodeBlocksArr(await getCodeBlocksTitles());
         updateToast(notification, `Connected.`).success();
       } catch (error) {
         console.log(error);
-        updateToast(notification, 'Connection failed.').fail();
+        updateToast(notification, "Connection failed.").fail();
       }
     }
     connectToServer();

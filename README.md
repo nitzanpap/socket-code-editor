@@ -9,10 +9,7 @@ Note that this might take a minute to load, since I am hosting this on a free se
 
 ## Demo
 
-
 https://github.com/nitzanpap/socket-code-editor/assets/87342833/296e0f76-7238-416f-8a2a-2defcf231609
-
-
 
 ## Local installation
 
@@ -50,10 +47,12 @@ Tom wants to share with Josh a piece of code, observe him while he is writing an
 Help Tom creating an online coding web application with the following pages and features :
 
 #### Lobby page (no need for authentication) :
+
 The page should contain the title “Choose code block” and a list of at least 4 items which represents code blocks, each item can be represented by a name (for example - “Async case”)
 Clicking on an item should take the user to the code block page with the details of the code block he chooses.
 
 #### Code block page :
+
 Both users should enter this page. (2 different clients)
 Assume that the first user who opens the code block page is the mentor, after that, any other user will be counted as a student.
 

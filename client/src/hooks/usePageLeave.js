@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 function usePageLeave() {
   const location = useLocation();
@@ -7,13 +7,13 @@ function usePageLeave() {
   useEffect(() => {
     function handleBeforeUnload(event) {
       event.preventDefault();
-      event.returnValue = '';
+      event.returnValue = "";
     }
 
-    window.addEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener("beforeunload", handleBeforeUnload);
 
     return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, [location]);
 }

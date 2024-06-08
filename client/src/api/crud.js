@@ -1,9 +1,9 @@
-import axios from 'axios';
+import axios from "axios";
 
 export const serverBaseUrl = import.meta.env.VITE_SERVER_BASE_URL;
 
 export async function getServer() {
-  console.log('Server:', serverBaseUrl);
+  console.log("Server:", serverBaseUrl);
   const res = await axios.get(`${serverBaseUrl}/`);
   const data = res.data;
   console.log(data);

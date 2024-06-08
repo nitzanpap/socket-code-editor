@@ -10,7 +10,5 @@
     "sourceType": "module"
   },
   "plugins": ["prettier"],
-  "rules": {
-
-  }
+  "rules": {}
 }

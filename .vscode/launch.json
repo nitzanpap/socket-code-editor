@@ -1,32 +1,26 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-        {
-            // cd into ./server and run npm run dev
-            "type": "node",
-            "request": "launch",
-            "name": "Server Debug",
-            "cwd": "${workspaceFolder}/server",
-            "runtimeExecutable": "npm",
-            "runtimeArgs": [
-                "run-script",
-                "start"
-            ],
-        },
-        {
-            // cd into ./client and run npm run dev
-            "type": "node",
-            "request": "launch",
-            "name": "Client Debug",
-            "cwd": "${workspaceFolder}/client",
-            "runtimeExecutable": "npm",
-            "runtimeArgs": [
-                "run-script",
-                "dev"
-            ],
-        }
-    ]
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      // cd into ./server and run npm run dev
+      "type": "node",
+      "request": "launch",
+      "name": "Server Debug",
+      "cwd": "${workspaceFolder}/server",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run-script", "start"]
+    },
+    {
+      // cd into ./client and run npm run dev
+      "type": "node",
+      "request": "launch",
+      "name": "Client Debug",
+      "cwd": "${workspaceFolder}/client",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run-script", "dev"]
+    }
+  ]
 }
