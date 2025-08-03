@@ -43,15 +43,20 @@ function LiveEditor() {
   const { id } = useParams()
   const [title, setTitle] = useState("")
   const [code, setCode] = useState("")
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   usePageLeave()
 
   // Handle code change in editor.
-  const onCodeChange = async (newCode) => {
-    console.log("Code change detected!")
-    setCode(newCode)
-    emitNewCodeToServer(newCode, id)
-  }
+  const onCodeChange = useCallback(
+    (newCode) => {
+      console.log("Code change detected!")
+      setCode(newCode)
+      emitNewCodeToServer(newCode, id)
+    },
+    [id]
+  )
 
   // Handle receiving new code.
 
@@ -64,36 +69,51 @@ function LiveEditor() {
       })
     }
     async function fetchData() {
-      const newCodeBlock = await getCodeBlock(id)
-      setTitle(newCodeBlock[0].title)
-      setCode(newCodeBlock[0].code)
-      receiveNewCode()
+      try {
+        const newCodeBlock = await getCodeBlock(id)
+        if (!newCodeBlock || newCodeBlock.length === 0) {
+          throw new Error("This code block does not exist.")
+        }
+        setTitle(newCodeBlock[0].title)
+        setCode(newCodeBlock[0].code)
+        receiveNewCode()
+      } catch (error) {
+        setError(error)
+        console.log(error)
+      } finally {
+        setLoading(false)
+      }
     }
     fetchData()
   }, [id])
 
   // Converts the code to a highlighted one.
-  const highlight = (code) => (
-    <Highlight
-      {...defaultProps}
-      theme={theme}
-      code={code}
-      language={language}
-      contentEditable={false}
-    >
-      {({ tokens, getLineProps, getTokenProps }) => (
-        <div style={{ minHeight: `${minHeight - padding / 4}vh` }}>
-          {tokens.map((line, i) => (
-            <div key={i} {...getLineProps({ line, key: i })}>
-              {line.map((token, lineIndex) => (
-                <span key={lineIndex} {...getTokenProps({ token })} />
-              ))}
-            </div>
-          ))}
-        </div>
-      )}
-    </Highlight>
+  const highlight = useCallback(
+    (code) => (
+      <Highlight {...defaultProps} theme={theme} code={code} language={language} contentEditable={false}>
+        {({ tokens, getLineProps, getTokenProps }) => (
+          <div style={{ minHeight: `${minHeight - padding / 4}vh` }}>
+            {tokens.map((line, i) => (
+              <div key={i} {...getLineProps({ line, key: i })}>
+                {line.map((token, lineIndex) => (
+                  <span key={lineIndex} {...getTokenProps({ token })} />
+                ))}
+              </div>
+            ))}
+          </div>
+        )}
+      </Highlight>
+    ),
+    []
   )
+
+  if (loading) {
+    return <div>Loading...</div>
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>
+  }
 
   return (
     <section className={styles.LiveEditor}>
@@ -101,10 +121,10 @@ function LiveEditor() {
       <h4>{`${title}`}</h4>
       <div className={styles.EditorContainer} style={{ height: `${minHeight}vh` }}>
         <Editor
-          onValueChange={useCallback(onCodeChange, [])}
+          onValueChange={onCodeChange}
           padding={padding}
           value={code}
-          highlight={useCallback(highlight, [])}
+          highlight={highlight}
           style={{ ...theme.plain }}
           className={styles.Editor}
           readOnly={userType !== "student"}
